@@ -18,7 +18,9 @@
         android:layout_height="match_parent"
         android:id="@+id/vf">
 
-        <include layout="@layout/home_page"/>
-        <include layout="@layout/settings"/>
+        <include layout="@layout/switches"/>
+        <include layout="@layout/theme"/>
+        <include layout="@layout/ipcam"/>
+        <include layout="@layout/preferenece"/>
     </ViewFlipper>
 </RelativeLayout>

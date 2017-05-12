@@ -2,11 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:stream="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+
     <com.github.niqdev.mjpeg.MjpegSurfaceView
         android:id="@+id/ipcam_mjpegView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0sp"
+        android:layout_weight="15"
         stream:type="stream_default" />
 
+    <TextView
+        android:id="@+id/ipcam_tx_IP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="TextView"
+        android:textSize="18sp" />
 </LinearLayout>

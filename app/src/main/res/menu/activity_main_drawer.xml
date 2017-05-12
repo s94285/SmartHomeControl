@@ -4,8 +4,9 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_switch"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/drawer_switch" />
+            android:icon="@drawable/ic_menu_manage"
+            android:title="@string/drawer_switch"
+            android:checked="true"/>
         <item
             android:id="@+id/nav_theme"
             android:icon="@drawable/ic_menu_gallery"
@@ -14,14 +15,13 @@
             android:id="@+id/nav_ipcam"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/drawer_ipcam" />
-        <item
-            android:id="@+id/nav_preference"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="@string/drawer_preference" />
     </group>
-
-    <item android:title="@string/drawer_about">
-        <menu>
+    <group
+        android:id="@+id/menu_bottom"
+        android:checkableBehavior="none">
+            <item
+                android:id="@+id/nav_preference"
+                android:title="@string/drawer_preference" />
             <item
                 android:id="@+id/nav_about"
                 android:title="@string/drawer_about" />
@@ -31,7 +31,6 @@
             <item
                 android:id="@+id/nav_exit"
                 android:title="@string/drawer_exit" />
-        </menu>
-    </item>
+    </group>
 
 </menu>

@@ -21,6 +21,5 @@
         <include layout="@layout/switches"/>
         <include layout="@layout/theme"/>
         <include layout="@layout/ipcam"/>
-        <include layout="@layout/preferenece"/>
     </ViewFlipper>
 </RelativeLayout>

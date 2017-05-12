@@ -1,8 +1,13 @@
 package s94285.smarthomecontrol;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -13,6 +18,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.ViewFlipper;
 import com.github.niqdev.mjpeg.DisplayMode;
 import com.github.niqdev.mjpeg.Mjpeg;
@@ -21,11 +28,10 @@ import com.github.niqdev.mjpeg.MjpegView;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     ViewFlipper vf;
+    TextView tx_home,tx_ipcam;
     MjpegView mjpegView;
     private final static int VF_SWITCH=0,VF_THEME=1,VF_IPCAM=2,VF_PREFER=3;
     private final static int TIMEOUT = 5;
-    private final static String IPCAM_URL = "http://127.0.0.1:8080/video";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,17 +65,18 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void init(){
-        vf = (ViewFlipper)findViewById(R.id.vf);
+
     }
 
     private void loadIpCam() {
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         try{
             Mjpeg.newInstance()
-                    .open(IPCAM_URL, TIMEOUT)
+                    .open("http://"+settings.getString("pref_ipcam_ed_webcamip","127.0.0.1:8080")+"/video", TIMEOUT)
                     .subscribe(inputStream -> {
                         mjpegView.setSource(inputStream);
                         mjpegView.setDisplayMode(DisplayMode.BEST_FIT);
-                        mjpegView.showFps(true);
+                        mjpegView.showFps(settings.getBoolean("pref_ipcam_sw_showfps",false));
                     },throwable->{
                         Log.e("Error: ",throwable.toString());
                         throwable.printStackTrace();
@@ -121,13 +128,17 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_switch) {
             // Handle the camera action
             vf.setDisplayedChild(0);
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+/*            tx_home = (TextView)findViewById(R.id.textView3);
+            tx_home.setText(sharedPreferences.getString("example_text",""));*/
         } else if (id == R.id.nav_theme) {
             vf.setDisplayedChild(1);
         } else if (id == R.id.nav_ipcam) {
-            vf.setDisplayedChild(2);
-
+            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+            vf.setDisplayedChild(2); //TODO
         } else if (id == R.id.nav_preference) {
-            vf.setDisplayedChild(3);
+            Intent intent = new Intent(MainActivity.this,SettingsActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_about) {
 
         } else if (id == R.id.nav_reference) {
@@ -145,5 +156,15 @@ public class MainActivity extends AppCompatActivity
     protected void onPause() {
         mjpegView.stopPlayback();
         super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        tx_home = (TextView)findViewById(R.id.textView3);
+        tx_home.setText(sharedPreferences.getString("example_text",""));
+        tx_ipcam = (TextView)findViewById(R.id.ipcam_tx_IP);
+        tx_ipcam.setText(sharedPreferences.getString("pref_ipcam_ed_webcamip","Default IP"));
+        super.onResume();
     }
 }

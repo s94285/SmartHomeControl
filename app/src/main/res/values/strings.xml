@@ -67,40 +67,6 @@
     <!-- Theme settings  -->
     <string name="pref_header_theme">Theme</string>
 
-    <string name="pref_title_sync_frequency">Sync frequency</string>
-    <string-array name="pref_sync_frequency_titles">
-        <item>15 minutes</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>3 hours</item>
-        <item>6 hours</item>
-        <item>Never</item>
-    </string-array>
-    <string-array name="pref_sync_frequency_values">
-        <item>15</item>
-        <item>30</item>
-        <item>60</item>
-        <item>180</item>
-        <item>360</item>
-        <item>-1</item>
-    </string-array>
-
-    <string-array name="list_preference_entries">
-        <item>Entry 1</item>
-        <item>Entry 2</item>
-        <item>Entry 3</item>
-    </string-array>
-
-    <string-array name="list_preference_entry_values">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-    </string-array>
-
-    <string-array name="multi_select_list_preference_default_value" />
-
-    <string name="pref_title_system_sync_settings">System sync settings</string>
-
     <!-- IPCam Settings -->
     <string name="pref_header_ipcam">IP Camera</string>
 
@@ -117,7 +83,13 @@
     <string name="reference_text">Default Port: 502</string>
     <string name="alertDialog_confirm">Confirm</string>
     <string name="about_checkVersion">Check for new version</string>
-
+    <string name="savePrefName">Save To &#8230;</string>
+    <string name="save_button">Save</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="pref_delete_confirm">Are you sure you want to delete</string>
+    <string name="theme_clear_all_title">Clear All Themes</string>
+    <string name="theme_clear_all_alert">Are you sure you want to erase all presets?</string>
+    <string name="savePrefNameBlankAlert">Please input a valid name</string>
     <!--Errors-->
     <string name="modbus_not_init">Modbus Cannot Initialize</string>
     <string name="modbus_not_read">Modbus Cannot Read</string>

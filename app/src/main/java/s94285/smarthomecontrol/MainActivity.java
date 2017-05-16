@@ -10,6 +10,7 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.text.InputType;
 import android.util.Log;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,11 +18,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.StringBuilderPrinter;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TabHost;
@@ -38,6 +41,8 @@ import com.serotonin.modbus4j.ModbusMaster;
 import com.serotonin.modbus4j.exception.ModbusInitException;
 import com.serotonin.modbus4j.ip.IpParameters;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private ViewFlipper vf;
@@ -48,19 +53,24 @@ public class MainActivity extends AppCompatActivity
     private Button switch_ac_bt_windstrong, switch_ac_bt_windmedium, switch_ac_bt_windweak, switch_elevator_bt_firstfloor, switch_elevator_bt_secondfloor;
     private ToggleButton switch_ac_tg_toggle;
     private Switch switch_light_1, switch_light_2, switch_light_3, switch_light_4, switch_light_5, switch_light_6, switch_light_7, switch_light_8;
+    private ListView pref_listView;
 
     private ModbusMaster modbusMaster;
     private IpParameters ipSlave;
     private ModbusFactory modbusFactory;
     private String IP;
     private Exception error;
-    private short targetTemp = 26,nowTemp = 0,onFloor = 1;
-    private Boolean[] xBoolArray = {false,false,false,false,false,false,false,false};
+    private Short targetTemp = 26, nowTemp = 0, onFloor = 1;
+    private Boolean[] xBoolArray = {false, false, false, false, false, false, false, false};
+    private String inputName = "";
+    private ArrayList<String> pref_List;
+    private ArrayAdapter<String> listAdapter;
+    private TinyDB tinyDB;
 
-    private final static int VF_SWITCH = 0, VF_THEME = 1, VF_IPCAM = 2, VF_PREFER = 3;
+    private final static int VF_SWITCH = 0, VF_THEME = 1, VF_IPCAM = 2;
     private final static int TIMEOUT = 5;
     private final static int[] SWITCH_ID = {R.id.switch_light_switch1, R.id.switch_light_switch2, R.id.switch_light_switch3, R.id.switch_light_switch4, R.id.switch_light_switch5, R.id.switch_light_switch6, R.id.switch_light_switch7, R.id.switch_light_switch8};
-    private final static int WIND_STRONG = 0,WIND_MEDIUM = 1, WIND_WEAK = 2, AC_POWER = 3, ELEVATOR_FIRST = 4,ELEVATOR_SECOND = 5;
+    private final static int WIND_STRONG = 0, WIND_MEDIUM = 1, WIND_WEAK = 2, AC_POWER = 3, ELEVATOR_FIRST = 4, ELEVATOR_SECOND = 5;
 
 
     @Override
@@ -69,6 +79,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        tinyDB = new TinyDB(MainActivity.this);
         mjpegView = (MjpegView) findViewById(R.id.ipcam_mjpegView);
         vf = (ViewFlipper) findViewById(R.id.vf);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -76,9 +87,14 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(view -> {
             switch (vf.getDisplayedChild()) {
                 case VF_IPCAM:
-                    Snackbar.make(view, getString(R.string.ipcam_fab_load), Snackbar.LENGTH_LONG)
+                    Snackbar.make(view, getString(R.string.ipcam_fab_load), Snackbar.LENGTH_SHORT)
                             .setAction("Action", null).show();
                     loadIpCam();
+                    break;
+                case VF_THEME:
+                    Snackbar.make(view, getString(R.string.ipcam_fab_load), Snackbar.LENGTH_SHORT)
+                            .setAction("Action", null).show();
+                    refreshPrefList();
                     break;
             }
         });
@@ -88,6 +104,21 @@ public class MainActivity extends AppCompatActivity
                     Snackbar.make(view, getString(R.string.ipcam_fab_Stop), Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                     mjpegView.stopPlayback();
+                    break;
+                case VF_THEME:
+                    new AlertDialog.Builder(this)
+                            .setTitle(getString(R.string.theme_clear_all_title))
+                            .setMessage(getString(R.string.theme_clear_all_alert))
+                            .setPositiveButton(getString(R.string.alertDialog_confirm), (dialogInterface, i) -> {
+                                pref_List.clear();
+                                tinyDB.clear();
+                                refreshPrefList();
+                            })
+                            .setNegativeButton(getString(R.string.cancel_button), (dialogInterface, i) -> {
+                            })
+                            .setCancelable(true)
+                            .show();
+                    refreshPrefList();
                     break;
             }
             return false;
@@ -109,7 +140,7 @@ public class MainActivity extends AppCompatActivity
 
     private void setListener() {
         View.OnClickListener onClickListener = (view -> {
-            switch(view.getId()){
+            switch (view.getId()) {
                 case R.id.switch_ac_bt_windstrong:
                     xBoolArray[WIND_STRONG] = true;
                     break;
@@ -158,9 +189,34 @@ public class MainActivity extends AppCompatActivity
         });
         switch_ac_tg_toggle.setOnCheckedChangeListener((compoundButton, b) -> {
             xBoolArray[AC_POWER] = b;
-            Log.d("acPower",String.valueOf(b));
+            Log.d("acPower", String.valueOf(b));
             startRunnable(writeModbus);
         });
+
+        pref_List = tinyDB.getListString("prefList");
+        refreshPrefList();
+    }
+
+    private void refreshPrefList() {
+        listAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, pref_List);
+        pref_listView.setAdapter(listAdapter);
+        pref_listView.setOnItemClickListener((adapterView, view, i, l) -> {
+            Toast.makeText(this, "Apply " + pref_List.get(i), Toast.LENGTH_SHORT).show();
+            applyTheme(i);
+            startRunnable(readModbus);
+        });
+        pref_listView.setOnItemLongClickListener((adapterView, view, i, l) -> {
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.pref_delete_confirm) + " " + pref_List.get(i))
+                    .setPositiveButton(getString(R.string.alertDialog_confirm), (dialogInterface, i1) -> {
+                        deleteTheme(i);
+                    })
+                    .setNegativeButton(getString(R.string.cancel_button), (dialogInterface, i1) -> {
+                    })
+                    .show();
+            return true;
+        });
+        tinyDB.putListString("prefList", pref_List);
     }
 
     private void init() {
@@ -209,6 +265,7 @@ public class MainActivity extends AppCompatActivity
         switch_elevator_bt_secondfloor = (Button) findViewById(R.id.switch_elevator_bt_secondfloor);
         switch_ac_tg_toggle = (ToggleButton) findViewById(R.id.switch_ac_tg_toggle);
         switch_ac_sk_targettemp = (SeekBar) findViewById(R.id.switch_ac_sk_targettemp);
+        pref_listView = (ListView) findViewById(R.id.theme_listView);
     }
 
     private void refreshModbus() {
@@ -254,7 +311,7 @@ public class MainActivity extends AppCompatActivity
                     runOnUiThread(() -> {
                         switch_ac_tx_nowtemp.setText(String.valueOf(nowTemp));
                         switch_ac_tx_targettemp.setText(String.valueOf(targetTemp));
-                        switch_ac_sk_targettemp.setProgress(targetTemp-16);
+                        switch_ac_sk_targettemp.setProgress(targetTemp - 16);
                         switch_ac_tg_toggle.setChecked(xBoolArray[AC_POWER]);
                         switch_elevator_tx_floor.setText(String.valueOf(onFloor));
                     });
@@ -337,6 +394,22 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         switch (id) {
             case R.id.action_save:
+                final EditText input = new EditText(this);
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                new AlertDialog.Builder(this)
+                        .setTitle(getString(R.string.savePrefName))
+                        .setView(input)
+                        .setPositiveButton(getString(R.string.save_button), (dialogInterface, i) -> {
+                            if (input.getText().length() != 0) {
+                                makeNewTheme(input.getText().toString());
+                                Toast.makeText(this, getString(R.string.save_button), Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(this, getString(R.string.savePrefNameBlankAlert), Toast.LENGTH_SHORT).show();
+                            }
+
+                        })
+                        .setNegativeButton(getString(R.string.cancel_button), (dialogInterface, i) -> dialogInterface.cancel())
+                        .show();
                 break;
             case R.id.action_refresh:
                 Toast.makeText(MainActivity.this, getString(R.string.modbus_refreshing), Toast.LENGTH_SHORT).show();
@@ -354,12 +427,12 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         if (id == R.id.nav_switch) {
             // Handle the camera action
-            vf.setDisplayedChild(0);
+            vf.setDisplayedChild(VF_SWITCH);
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         } else if (id == R.id.nav_theme) {
-            vf.setDisplayedChild(1);
+            vf.setDisplayedChild(VF_THEME);
         } else if (id == R.id.nav_ipcam) {
-            vf.setDisplayedChild(2); //TODO
+            vf.setDisplayedChild(VF_IPCAM); //TODO
         } else if (id == R.id.nav_preference) {
             Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(intent);
@@ -430,6 +503,22 @@ public class MainActivity extends AppCompatActivity
         return booleans;
     }
 
+    private ArrayList<Boolean> boolArrayToArrayList(Boolean[] array) {
+        ArrayList<Boolean> booleans = new ArrayList<>(8);
+        for (int i = 0; i < 8; i++) {
+            booleans.add(i, array[i]);
+        }
+        return booleans;
+    }
+
+    private Boolean[] arrayListToBoolArray(ArrayList<Boolean> arrayList) {
+        Boolean[] booleans = new Boolean[8];
+        for (int i = 0; i < 8; i++) {
+            booleans[i] = arrayList.get(i);
+        }
+        return booleans;
+    }
+
     private void changeSwitchStatus(Boolean[] array) {
         for (int i = 0; i < 8; i++) {
             Switch switches = (Switch) findViewById(SWITCH_ID[i]);
@@ -437,9 +526,32 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void startRunnable(Runnable runnable){
+    private void startRunnable(Runnable runnable) {
         Thread thread = new Thread(runnable);
         thread.start();
+    }
+
+    private void makeNewTheme(String themeName) {
+        pref_List.add(themeName);
+        startRunnable(readModbus);
+        tinyDB.putBoolean(themeName + "_ac", xBoolArray[AC_POWER]);
+        tinyDB.putListBoolean(themeName + "_switch", boolArrayToArrayList(readSwitchStatus()));
+        tinyDB.putInt(themeName + "_targetTemp", Integer.parseInt(targetTemp.toString()));
+        refreshPrefList();
+    }
+
+    private void deleteTheme(int idInPrefList) {
+        pref_List.remove(idInPrefList);
+        refreshPrefList();
+    }
+
+    private void applyTheme(int idInPrefList) {
+        String themeName = pref_List.get(idInPrefList);
+        xBoolArray[AC_POWER] = tinyDB.getBoolean(themeName + "_ac");
+        changeSwitchStatus(arrayListToBoolArray(tinyDB.getListBoolean(themeName + "_switch")));
+        targetTemp = Short.parseShort(String.valueOf(tinyDB.getInt(themeName + "_targetTemp")));
+        startRunnable(writeModbus);
+        refreshPrefList();
     }
 
 }

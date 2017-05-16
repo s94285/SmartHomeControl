@@ -71,7 +71,7 @@
 
     <string name="pref_title_webcamIP">Web Camera IP</string>
     <string name="pref_default_webcamIP" translatable="false">127.0.0.1:8080/video</string>
-    <string name="pref_summary_showfps">Show FPS at down-right corner</string>
+    <string name="pref_summary_showfps">Show frames per second at down-right corner</string>
     <string name="pref_title_showfps">Show FPS</string>
 
     <!--Others-->

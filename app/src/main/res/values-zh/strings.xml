@@ -26,7 +26,7 @@
     <string name="pref_header_ipcam">網路攝影機</string>
     <string name="pref_header_switch">開關</string>
     <string name="pref_header_theme">主題</string>
-    <string name="pref_summary_showfps">在右下角顯示 FPS</string>
+    <string name="pref_summary_showfps">在右下角顯示每秒畫面數</string>
     <string name="pref_switch_host_title">PLC 的 Slave IP</string>
     <string name="pref_switch_port_title">PLC 連接垾 (502)</string>
     <string name="pref_switch_retries_title">重試連接次數 (1)</string>

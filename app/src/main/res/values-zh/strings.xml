@@ -28,12 +28,12 @@
     <string name="pref_header_theme">主題</string>
     <string name="pref_summary_showfps">在右下角顯示每秒畫面數</string>
     <string name="pref_switch_host_title">PLC 的 Slave IP</string>
-    <string name="pref_switch_port_title">PLC 連接垾 (502)</string>
+    <string name="pref_switch_port_title">PLC 連接zj4 (502)</string>
     <string name="pref_switch_retries_title">重試連接次數 (1)</string>
     <string name="pref_switch_timeout_title">連接逾時 (500)</string>
     <string name="pref_title_showfps">顯示 FPS</string>
     <string name="pref_title_webcamIP">網路攝影機 IP 位址</string>
-    <string name="reference_text">預設聯接垾：500</string>
+    <string name="reference_text">預設連接埠：500</string>
     <string name="savePrefName">儲存為&#8230;</string>
     <string name="savePrefNameBlankAlert">請輸入正確名稱</string>
     <string name="save_button">儲存</string>

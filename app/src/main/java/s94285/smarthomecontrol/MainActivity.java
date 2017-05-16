@@ -52,17 +52,14 @@ public class MainActivity extends AppCompatActivity
     private SeekBar switch_ac_sk_targettemp;
     private Button switch_ac_bt_windstrong, switch_ac_bt_windmedium, switch_ac_bt_windweak, switch_elevator_bt_firstfloor, switch_elevator_bt_secondfloor;
     private ToggleButton switch_ac_tg_toggle;
-    private Switch switch_light_1, switch_light_2, switch_light_3, switch_light_4, switch_light_5, switch_light_6, switch_light_7, switch_light_8;
     private ListView pref_listView;
 
     private ModbusMaster modbusMaster;
     private IpParameters ipSlave;
     private ModbusFactory modbusFactory;
-    private String IP;
     private Exception error;
     private Short targetTemp = 26, nowTemp = 0, onFloor = 1;
     private Boolean[] xBoolArray = {false, false, false, false, false, false, false, false};
-    private String inputName = "";
     private ArrayList<String> pref_List;
     private ArrayAdapter<String> listAdapter;
     private TinyDB tinyDB;
@@ -92,7 +89,7 @@ public class MainActivity extends AppCompatActivity
                     loadIpCam();
                     break;
                 case VF_THEME:
-                    Snackbar.make(view, getString(R.string.ipcam_fab_load), Snackbar.LENGTH_SHORT)
+                    Snackbar.make(view, getString(R.string.theme_refresh_prefList), Snackbar.LENGTH_SHORT)
                             .setAction("Action", null).show();
                     refreshPrefList();
                     break;
@@ -208,9 +205,9 @@ public class MainActivity extends AppCompatActivity
         pref_listView.setOnItemLongClickListener((adapterView, view, i, l) -> {
             new AlertDialog.Builder(this)
                     .setTitle(getString(R.string.pref_delete_confirm) + " " + pref_List.get(i))
-                    .setPositiveButton(getString(R.string.alertDialog_confirm), (dialogInterface, i1) -> {
-                        deleteTheme(i);
-                    })
+                    .setPositiveButton(getString(R.string.alertDialog_confirm), (dialogInterface, i1) ->
+                        deleteTheme(i)
+                    )
                     .setNegativeButton(getString(R.string.cancel_button), (dialogInterface, i1) -> {
                     })
                     .show();
@@ -247,14 +244,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void findView() {
-        switch_light_1 = (Switch) findViewById(R.id.switch_light_switch1);
-        switch_light_2 = (Switch) findViewById(R.id.switch_light_switch2);
-        switch_light_3 = (Switch) findViewById(R.id.switch_light_switch3);
-        switch_light_4 = (Switch) findViewById(R.id.switch_light_switch4);
-        switch_light_5 = (Switch) findViewById(R.id.switch_light_switch5);
-        switch_light_6 = (Switch) findViewById(R.id.switch_light_switch6);
-        switch_light_7 = (Switch) findViewById(R.id.switch_light_switch7);
-        switch_light_8 = (Switch) findViewById(R.id.switch_light_switch8);
         switch_ac_tx_nowtemp = (TextView) findViewById(R.id.switch_ac_tx_nowtemp);
         switch_ac_tx_targettemp = (TextView) findViewById(R.id.switch_ac_tx_targettemp);
         switch_elevator_tx_floor = (TextView) findViewById(R.id.switch_elevator_tx_floor);
@@ -428,11 +417,10 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_switch) {
             // Handle the camera action
             vf.setDisplayedChild(VF_SWITCH);
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         } else if (id == R.id.nav_theme) {
             vf.setDisplayedChild(VF_THEME);
         } else if (id == R.id.nav_ipcam) {
-            vf.setDisplayedChild(VF_IPCAM); //TODO
+            vf.setDisplayedChild(VF_IPCAM);
         } else if (id == R.id.nav_preference) {
             Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(intent);

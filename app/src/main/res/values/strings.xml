@@ -22,7 +22,7 @@
     <string name="switch_tab_tab3_title">Elevator</string>
 
     <string name="switch_light_1">Entrance</string>
-    <string name="switch_light_2">Stair</string>
+    <string name="switch_light_2">Stairs</string>
     <string name="switch_light_3">Hallway</string>
     <string name="switch_light_4">Living Room </string>
     <string name="switch_light_5">Bathroom 1</string>
@@ -54,14 +54,13 @@
 
     <!-- Switch settings -->
     <string name="pref_header_switch">Switch</string>
-    <string name="pref_switch_host_default">192.168.5.150</string>
+    <string name="pref_switch_host_default" translatable="false">192.168.5.150</string>
     <string name="pref_switch_host_title">Slave IP of PLC</string>
-    <string name="pref_switch_host_message">PLZ restart app to apply changes</string>
-    <string name="pref_switch_port_default">502</string>
+    <string name="pref_switch_port_default" translatable="false">502</string>
     <string name="pref_switch_port_title">Port of PLC (502)</string>
-    <string name="pref_switch_timeout_default">500</string>
+    <string name="pref_switch_timeout_default" translatable="false">500</string>
     <string name="pref_switch_timeout_title">Connection Timeout (500)</string>
-    <string name="pref_switch_retries_default">1</string>
+    <string name="pref_switch_retries_default" translatable="false">1</string>
     <string name="pref_switch_retries_title">Connection Retries (1)</string>
 
     <!-- Theme settings  -->
@@ -71,13 +70,9 @@
     <string name="pref_header_ipcam">IP Camera</string>
 
     <string name="pref_title_webcamIP">Web Camera IP</string>
-    <string name="pref_default_webcamIP">127.0.0.1:8080/video</string>
+    <string name="pref_default_webcamIP" translatable="false">127.0.0.1:8080/video</string>
     <string name="pref_summary_showfps">Show FPS at down-right corner</string>
     <string name="pref_title_showfps">Show FPS</string>
-    <string name="pref_title_ringtone">Ringtone</string>
-    <string name="pref_ringtone_silent">Silent</string>
-
-    <string name="pref_title_vibrate">Vibrate</string>
 
     <!--Others-->
     <string name="reference_text">Default Port: 502</string>
@@ -90,10 +85,12 @@
     <string name="theme_clear_all_title">Clear All Themes</string>
     <string name="theme_clear_all_alert">Are you sure you want to erase all presets?</string>
     <string name="savePrefNameBlankAlert">Please input a valid name</string>
+    <string name="theme_refresh_prefList">Refreshing (Long press to delete all)</string>
     <!--Errors-->
     <string name="modbus_not_init">Modbus Cannot Initialize</string>
     <string name="modbus_not_read">Modbus Cannot Read</string>
     <string name="modbus_not_write">Modbus Cannot Write</string>
     <string name="modbus_refreshing">Refreshing</string>
+    <string name="action_settings">Settings</string>
 
 </resources>

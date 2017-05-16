@@ -117,14 +117,16 @@ class ModbusRW {
     /**Writing Values************************************************************************/
 
 
+/*
     void mbWriteBooleanToBit(int offset, int bit, boolean bool) throws Exception{
-        byte Bit = Byte.parseByte(String.valueOf(bit));
+        byte abyte = Byte.parseByte(String.valueOf(bit));
         if (!modbusMaster.isInitialized()){
             throw mbNotInitialized;
         } else {
-            modbusMaster.setValue(SLAVE_ID, RegisterRange.HOLDING_REGISTER,offset,Bit,bool);
+            modbusMaster.setValue(SLAVE_ID, RegisterRange.HOLDING_REGISTER,offset,abyte,bool);
         }
     }
+*/
 
     void mbWriteBoolArrayToByte(int offset, Boolean[] booleans) throws Exception{
         if (!modbusMaster.isInitialized()){
@@ -208,7 +210,17 @@ class ModbusRW {
         return Short.parseShort(String.valueOf(result));
     }
 
-    public Integer valueOfBoolArray(Boolean[] array){
+    Boolean[] integerToBoolArray(Integer integer){
+        Boolean[] boolArray = new Boolean[32];
+        for(int i = 0;i<32;i++){
+            int mod = integer%2;
+            boolArray[i]= (mod == 1);
+            integer/=2;
+        }
+        return boolArray;
+    }
+
+    Integer valueOfBoolArray(Boolean[] array){
         int total = 0;
         for(int i = 0;i < array.length; i++){
             int mul = 1;

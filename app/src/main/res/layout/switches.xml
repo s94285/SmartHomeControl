@@ -1,13 +1,282 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Home" />
+    <TabHost
+        android:id="@+id/tabhost"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="match_parent"
+                android:layout_height="0sp"
+                android:layout_weight="14">
+
+                <LinearLayout
+                    android:id="@+id/tab1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:divider="@android:drawable/divider_horizontal_bright"
+                    android:orientation="vertical"
+                    android:paddingBottom="5sp"
+                    android:paddingLeft="15sp"
+                    android:paddingRight="15sp"
+                    android:paddingTop="5sp"
+                    android:scrollbarAlwaysDrawHorizontalTrack="true"
+                    android:showDividers="middle">
+
+                    <Switch
+                        android:id="@+id/switch_light_switch1"
+                        android:layout_width="match_parent"
+                        android:layout_height="0sp"
+                        android:layout_weight="1"
+                        android:text="@string/switch_light_1"
+                        android:textSize="20sp" />
+
+                    <Switch
+                        android:id="@+id/switch_light_switch2"
+                        android:layout_width="match_parent"
+                        android:layout_height="0sp"
+                        android:layout_weight="1"
+                        android:text="@string/switch_light_2"
+                        android:textSize="20sp" />
+
+                    <Switch
+                        android:id="@+id/switch_light_switch3"
+                        android:layout_width="match_parent"
+                        android:layout_height="0sp"
+                        android:layout_weight="1"
+                        android:text="@string/switch_light_3"
+                        android:textSize="20sp" />
+
+                    <Switch
+                        android:id="@+id/switch_light_switch4"
+                        android:layout_width="match_parent"
+                        android:layout_height="0sp"
+                        android:layout_weight="1"
+                        android:text="@string/switch_light_4"
+                        android:textSize="20sp" />
+
+                    <Switch
+                        android:id="@+id/switch_light_switch5"
+                        android:layout_width="match_parent"
+                        android:layout_height="0sp"
+                        android:layout_weight="1"
+                        android:text="@string/switch_light_5"
+                        android:textSize="20sp" />
+
+                    <Switch
+                        android:id="@+id/switch_light_switch6"
+                        android:layout_width="match_parent"
+                        android:layout_height="0sp"
+                        android:layout_weight="1"
+                        android:text="@string/switch_light_6"
+                        android:textSize="20sp" />
+
+                    <Switch
+                        android:id="@+id/switch_light_switch7"
+                        android:layout_width="match_parent"
+                        android:layout_height="0sp"
+                        android:layout_weight="1"
+                        android:text="@string/switch_light_7"
+                        android:textSize="20sp" />
+
+                    <Switch
+                        android:id="@+id/switch_light_switch8"
+                        android:layout_width="match_parent"
+                        android:layout_height="0sp"
+                        android:layout_weight="1"
+                        android:text="@string/switch_light_8"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tab2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:divider="@android:drawable/divider_horizontal_bright"
+                    android:orientation="vertical"
+                    android:padding="10sp"
+                    android:showDividers="middle">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0sp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="6"
+                            android:text="@string/switch_ac_nowtemp"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/switch_ac_tx_nowtemp"
+                            android:layout_width="0sp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0sp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="3"
+                            android:text="@string/switch_ac_targettemp"
+                            android:textSize="20sp" />
+
+                        <SeekBar
+                            android:id="@+id/switch_ac_sk_targettemp"
+                            android:layout_width="0sp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="3"
+                            android:max="16"
+                            android:progress="10" />
+
+                        <TextView
+                            android:id="@+id/switch_ac_tx_targettemp"
+                            android:layout_width="0sp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="26"
+                            android:textSize="20sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0sp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/switch_ac_tx_wind"
+                            android:textSize="20sp" />
+
+                        <Button
+                            android:id="@+id/switch_ac_bt_windstrong"
+                            android:layout_width="0sp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/switch_ac_bt_windstrong" />
+
+                        <Button
+                            android:id="@+id/switch_ac_bt_windmedium"
+                            android:layout_width="0sp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/switch_ac_bt_windmedium" />
+
+                        <Button
+                            android:id="@+id/switch_ac_bt_windweak"
+                            android:layout_width="0sp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/switch_ac_bt_windweak" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0sp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="5"
+                            android:text="@string/switch_ac_tx_toggle"
+                            android:textSize="20sp" />
+
+                        <ToggleButton
+                            android:id="@+id/switch_ac_tg_toggle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tab3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:divider="@android:drawable/divider_horizontal_bright"
+                    android:orientation="vertical"
+                    android:padding="10sp"
+                    android:showDividers="middle">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0sp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="5"
+                            android:text="@string/switch_elevator_tx_floor"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/switch_elevator_tx_floor"
+                            android:layout_width="0sp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_weight="2"
+                            android:textSize="20sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/switch_elevator_bt_firstfloor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/switch_elevator_bt_firstfloor" />
+
+                        <Button
+                            android:id="@+id/switch_elevator_bt_secondfloor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/switch_elevator_bt_secondfloor" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </FrameLayout>
+
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="0sp"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </TabHost>
 </LinearLayout>

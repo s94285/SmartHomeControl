@@ -176,8 +176,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-            bindPreferenceSummaryToValue(findPreference("example_text"));
-            bindPreferenceSummaryToValue(findPreference("example_list"));
+            bindPreferenceSummaryToValue(findPreference("pref_switch_host"));
+            bindPreferenceSummaryToValue(findPreference("pref_switch_port"));
+            bindPreferenceSummaryToValue(findPreference("pref_switch_timeout"));
+            bindPreferenceSummaryToValue(findPreference("pref_switch_retries"));
         }
 
         @Override

@@ -25,7 +25,8 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName="s94285.smarthomecontrol.MainActivity"></activity>
+            android:parentActivityName="s94285.smarthomecontrol.MainActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

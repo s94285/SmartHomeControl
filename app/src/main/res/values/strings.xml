@@ -9,7 +9,7 @@
 
     <!--Drawer-->
     <string name="drawer_switch">Switch</string>
-    <string name="drawer_theme">Theme</string>
+    <string name="drawer_theme">Profiles</string>
     <string name="drawer_ipcam">IP Camera</string>
     <string name="drawer_preference">Preference</string>
     <string name="drawer_about">About</string>
@@ -64,8 +64,7 @@
     <string name="pref_switch_retries_title">Connection Retries (1)</string>
 
     <!-- Theme settings  -->
-    <string name="pref_header_theme">Theme</string>
-
+    <string name="pref_header_theme">Profiles</string>  <!--I realized that profile is better than theme-->
     <!-- IPCam Settings -->
     <string name="pref_header_ipcam">IP Camera</string>
 
@@ -82,8 +81,8 @@
     <string name="save_button">Save</string>
     <string name="cancel_button">Cancel</string>
     <string name="pref_delete_confirm">Are you sure you want to delete</string>
-    <string name="theme_clear_all_title">Clear All Themes</string>
-    <string name="theme_clear_all_alert">Are you sure you want to erase all presets?</string>
+    <string name="theme_clear_all_title">Clear All Profiles</string>
+    <string name="theme_clear_all_alert">Are you sure you want to erase all profiles?</string>
     <string name="savePrefNameBlankAlert">Please input a valid name</string>
     <string name="theme_refresh_prefList">Refreshing (Long press to delete all)</string>
     <!--Errors-->

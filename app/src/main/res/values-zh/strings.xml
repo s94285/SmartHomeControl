@@ -15,7 +15,7 @@
     <string name="drawer_preference">偏好設定</string>
     <string name="drawer_reference">說明</string>
     <string name="drawer_switch">開關</string>
-    <string name="drawer_theme">主題</string>
+    <string name="drawer_theme">設定檔</string>
     <string name="ipcam_fab_Stop">停止串流</string>
     <string name="ipcam_fab_load">開始串流</string>
     <string name="modbus_not_init">無法初始化 Modbus</string>
@@ -58,8 +58,8 @@
     <string name="switch_tab_tab1_title">電燈</string>
     <string name="switch_tab_tab2_title">空調</string>
     <string name="switch_tab_tab3_title">電梯</string>
-    <string name="theme_clear_all_alert">你確定要刪除所有主題？</string>
-    <string name="theme_clear_all_title">清除所有主題</string>
+    <string name="theme_clear_all_alert">你確定要刪除所有設定檔？</string>
+    <string name="theme_clear_all_title">清除所有設定檔</string>
     <string name="theme_refresh_prefList">重新整理中 (長按以刪除所有)</string>
     <string name="title_activity_settings">設定</string>
 </resources>

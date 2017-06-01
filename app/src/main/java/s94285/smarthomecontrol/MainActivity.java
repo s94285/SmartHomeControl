@@ -155,6 +155,7 @@ public class MainActivity extends AppCompatActivity
                     break;
             }
             startRunnable(writeModbus);
+            startRunnable(readModbus);
         });
         for (int i = 0; i < 8; i++) {
             Switch switches = (Switch) findViewById(SWITCH_ID[i]);
@@ -182,12 +183,14 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 startRunnable(writeModbus);
+                startRunnable(readModbus);
             }
         });
         switch_ac_tg_toggle.setOnCheckedChangeListener((compoundButton, b) -> {
             xBoolArray[AC_POWER] = b;
             Log.d("acPower", String.valueOf(b));
             startRunnable(writeModbus);
+            startRunnable(readModbus);
         });
 
         pref_List = tinyDB.getListString("prefList");
